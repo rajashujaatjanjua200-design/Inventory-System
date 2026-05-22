@@ -3,445 +3,212 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Islam and Co | Online Order System</title>
+  <title>Islam and Co | Login</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
+    /* LOGIN OVERLAY STYLE */
+    #loginOverlay { position: fixed; top:0; left:0; width:100%; height:100%; background: #e3f2fd; z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-box { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    
+    /* ORIGINAL CSS */
     :root { --p: #002366; --a: #FFC107; --w: #25D366; }
     body { background-color: #e3f2fd; font-family: 'Segoe UI', sans-serif; padding-bottom: 30px; }
-    .promo-bar { background: #d00000; color: white; padding: 6px; font-weight: bold; font-size: 13px; text-align: center; }
     
-    .header { 
-      padding: 12px 10px; 
-      text-align: center; 
-      background: linear-gradient(135deg, #001f5c 0%, #003a8c 100%); 
-      border-bottom: 3px solid var(--a); 
-      margin-bottom: 5px; 
-      position: relative;
-    }
-    
-    .team-badge {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      padding: 6px 18px; 
-      border-radius: 50px;
-      display: inline-flex;
-      align-items: center;
-      border: 1.5px solid var(--a);
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-      position: relative;
-    }
+    /* UPDATED MARQUEE STYLE */
+    .promo-bar { background: #d00000; color: white; padding: 6px; font-weight: bold; font-size: 13px; text-align: center; overflow: hidden; white-space: nowrap; }
+    .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
+    @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-    .header-title { 
-      font-size: 16px; 
-      font-weight: 400; 
-      margin: 0; 
-      text-transform: uppercase; 
-      letter-spacing: 1px; 
-      color: #FFFFFF !important; 
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    .header-subtitle { 
-      margin-top: 5px; 
-      font-size: 10px; 
-      font-weight: 700; 
-      color: #FFFFFF; 
-      background: rgba(0, 0, 0, 0.3); 
-      padding: 2px 12px; 
-      border-radius: 20px;
-      display: inline-block;
-      text-transform: uppercase;
-      border: 1px solid var(--a);
-    }
-
+    .header { padding: 12px 10px; text-align: center; background: linear-gradient(135deg, #001f5c 0%, #003a8c 100%); border-bottom: 3px solid var(--a); margin-bottom: 5px; position: relative; }
+    .team-badge { background: rgba(255, 255, 255, 0.1); color: white; padding: 6px 18px; border-radius: 50px; display: inline-flex; align-items: center; border: 1.5px solid var(--a); box-shadow: 0 3px 8px rgba(0,0,0,0.2); position: relative; }
+    .header-title { font-size: 16px; font-weight: 400; margin: 0; text-transform: uppercase; letter-spacing: 1px; color: #FFFFFF !important; display: inline-block; vertical-align: middle; }
+    .header-subtitle { margin-top: 5px; font-size: 10px; font-weight: 700; color: #FFFFFF; background: rgba(0, 0, 0, 0.3); padding: 2px 12px; border-radius: 20px; display: inline-block; text-transform: uppercase; border: 1px solid var(--a); }
     .section-card { background: white; border-radius: 20px; margin: 15px 12px; padding: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: none; }
     .section-title { color: var(--p); font-weight: 800; font-size: 15px; margin-bottom: 12px; border-left: 5px solid var(--a); padding-left: 10px; text-transform: uppercase; }
     .form-control { border-radius: 12px; height: 50px; margin-bottom: 10px; border: 1.5px solid #ddd; font-weight: 600; }
     .btn-search { background: var(--p); color: white; border-radius: 12px; width: 60px; }
-    
-    /* BILL BOX MAIN CONTAINER - WITH PERFECT BORDER APPLY */
     .bill-box { background: white; border: 1px solid #000000 !important; padding: 12px; font-family: Arial, sans-serif; color: #000; margin: 10px auto; max-width: 680px; padding-bottom: 5px; } 
     .bill-header-table, .bill-info-table, .bill-items-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; color: #000; }
-    
-    /* INVOICE TITLE REDUCED BY 2 NUMBERS */
     .invoice-title { font-size: 13px; font-weight: bold; text-align: right; text-transform: uppercase; vertical-align: top; padding-top: 2px; }
-    
-    /* LOWER TEXT FONTS REDUCED BY 1 NUMBER */
     .dist-details { font-size: 10px; line-height: 1.4; }
     .dispatch-text { margin: 3px 0; font-size: 10px; }
     .bill-info-text { line-height: 1.5; font-size: 10px; }
-    
-    /* PRODUCTS TABLE SPACING AND FONTS */
     .bill-items-table th { border-top: none; border-bottom: 1px solid #000; padding: 3px 2px; font-size: 10px; font-weight: bold; text-align: left; }
     .bill-items-table td { padding: 1.5px 2px; font-size: 10px; border-bottom: 1px solid #000; }
-    
     .border-top-bottom { border-top: 1px solid #000000 !important; border-bottom: 1px solid #000000 !important; font-weight: bold; }
     .border-top-bottom td { padding: 4px 2px !important; }
-    
-    /* TOTALS BOX */
     .bill-total-box { float: right; width: 52%; margin-top: 3px; font-size: 10px; color: #000; padding-right: 5px; }
     .bill-total-box table { margin: 0; padding: 0; width: 100%; border-collapse: collapse; border: none !important; table-layout: fixed; }
     .bill-total-box tr { border: none !important; }
     .bill-total-box td { padding: 0.5px 0 !important; line-height: 1.2; white-space: nowrap; border: none !important; }
-    
-    /* NET AMOUNT BOX - BORDER SET TO NORMAL 1PX (BOLD REMOVED) */
     .net-amount-box { border: 1px solid #000000 !important; padding: 1px 5px; font-weight: bold; display: inline-block; font-size: 11px; margin-top: 1px; }
-    
-    /* FOOTER SECTION */
     .bill-footer-section { margin-top: 15px; padding-top: 4px; font-size: 9px; line-height: 1.3; color: #000; margin-bottom: 0px; } 
-    
     .btn-wa { background: var(--w); color: white; font-weight: bold; width: 100%; height: 60px; border-radius: 20px; font-size: 18px; border: none; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
     .btn-loc { background: #f8f9fa; color: #333; border: 2px solid #ddd; border-radius: 12px; margin-bottom: 10px; font-weight: 800; }
     .wa-select-box { border: 2px solid var(--w) !important; background: #f6fff9 !important; color: #075E54 !important; }
-
     .btn-remove { color: #d00000; background: none; border: none; font-size: 16px; padding: 0 5px; }
     .cart-item { background: #fff; border-radius: 10px; padding: 10px; margin-bottom: 5px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
   </style>
 </head>
 <body>
 
-<div class="promo-bar"><marquee id="promoTxt">Connecting to Islam and Co. Server...</marquee></div>
-
-<div class="header">
-  <div class="team-badge">
-    <h1 class="header-title">ISLAM AND CO.</h1>
-  </div>
-  <br>
-  <div class="header-subtitle">
-    <i class="fas fa-bolt mr-1"></i> PEPSI ONLINE ORDERING SYSTEM
+<div id="loginOverlay">
+  <div class="login-box">
+  <div style="position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #888;">
+    &reg; Powered by Shujaat
+</div>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pepsi_2023.svg/1280px-Pepsi_2023.svg.png" 
+     style="width: 80px; display: block; margin: 0 auto 10px;">
+<div style="font-size: 14px; margin-bottom: 10px;">Online Ordering System</div>
+    <h3 style="color:#002366; font-weight:800;">ISLAM AND CO.</h3>
+    <input type="password" id="passInput" class="form-control" placeholder="Enter Password">
+    <button onclick="checkLogin()" class="btn btn-primary btn-block" style="background:#002366; border-radius:12px; font-weight:bold;">LOGIN 🚀</button>
+    <div id="errMsg" style="color:red; margin-top:10px; font-weight:bold;"></div>
   </div>
 </div>
 
-<div class="container-fluid">
-  <div class="section-card">
-    <div class="section-title">Retailer Details</div>
-    <div class="input-group mb-2">
-      <input type="text" id="inputId" class="form-control" placeholder="Search Outlet ID" oninput="updateID()">
-      <div class="input-group-append"><button class="btn btn-search" onclick="searchData()"><i class="fas fa-search"></i></button></div>
-    </div>
+<div id="mainSystemApp" style="display:none;">
+    <div class="promo-bar"><span id="promoTxt" class="marquee-text">Connecting to Islam and Co. Server...</span></div>
     
-    <input type="text" id="outName" class="form-control" placeholder="Outlet Name" oninput="liveSync()">
-    <input type="text" id="outPhone" class="form-control" placeholder="Phone Number" oninput="liveSync()">
-    <input type="text" id="outAddr" class="form-control" placeholder="Address" oninput="liveSync()">
-    <input type="text" id="outBooker" class="form-control" placeholder="Booker Name" oninput="liveSync()">
-    
-    <button class="btn btn-loc btn-block" onclick="getLocation()">
-      <i class="fas fa-map-marker-alt mr-2" style="color:red;"></i> <span id="locStatus">GET SHOP LOCATION (PIN)</span>
-    </button>
-    <input type="hidden" id="outLoc" value="Location Not Shared">
-  </div>
-
-  <div class="section-card" style="border: 2px solid var(--w); background: #f6fff9;">
-    <div class="section-title" style="color: #075E54;"><i class="fab fa-whatsapp mr-2"></i> SEND ORDER TO:</div>
-    <select id="waTarget" class="form-control font-weight-bold wa-select-box">
-      <option value="923465846781">Asiam Hussain</option>
-      <option value="923415011140">Adnan Hassan</option>
-      <option value="923061645603">Saqib Abbas</option>
-      <option value="923461649698">Arslan Sajid</option>
-      <option value="923150564149">Asim Raza</option>
-      <option value="923105714429">Naqeeb Ur Rehman</option>
-    </select>
-  </div>
-
-  <div class="section-card">
-    <div class="section-title">Select Products 🛒</div>
-    <select id="prodDrop" class="form-control" style="background:#fffbe6;"></select>
-    <div class="row no-gutters">
-      <div class="col-7 pr-2"><input type="number" id="prodQty" class="form-control" value="1" min="1"></div>
-      <div class="col-5"><button class="btn btn-primary btn-block h-100" style="border-radius:12px; font-weight:bold;" onclick="addItem()">ADD</button></div>
+    <div class="header">
+      <div class="team-badge"><h1 class="header-title">ISLAM AND CO.</h1></div><br>
+      <div class="header-subtitle"><i class="fas fa-bolt mr-1"></i> PEPSI ONLINE ORDERING SYSTEM</div>
     </div>
-  </div>
-
-  <div id="cartList" class="px-2 mb-3"></div>
-
-  <div id="captureArea">
-    <div class="bill-box" id="mainBill">
-      
-      <table class="bill-header-table" style="margin-bottom: 0px;">
-        <tr>
-          <td width="50%" style="vertical-align: top;">
-            <span style="font-size: 13px; font-weight: bold; color: #000000; display: block; line-height: 1.1; margin: 0; padding: 0;">ISLAM AND CO.</span>
-          </td>
-          <td width="50%" class="invoice-title">SALE INVOICE</td>
-        </tr>
-      </table>
-
-      <div style="text-align: center; font-size: 10px; font-weight: 500; margin: 0 auto; padding: 0; color: #000; line-height: 1.0;" id="billDate"></div>
-
-      <table class="bill-info-table" style="margin-top: 4px;">
-        <tr>
-          <td width="60%" class="dist-details">
-            <strong>Distributor CNIC :</strong> 37202-4977404-3<br>
-            <strong>Distributor NTN :</strong> A439767-0<br>
-            <strong>Distributor STRN :</strong> 9000<br>
-            <strong>Distributor Address :</strong> CHOA SAIDAN SHAH, CHAKWAL
-          </td>
-          <td width="40%" style="text-align: right; vertical-align: top; font-size: 10px; line-height: 1.4;">
-            <br><br>
-            <strong>Invoice#</strong> <span id="billInvNum">44435754</span>
-          </td>
-        </tr>
-      </table>
-      
-      <p class="dispatch-text"><strong>Dispatch#</strong> 1632207    14981778507429067</p>
-      <hr style="border: 0; border-top: 1px solid #000; margin: 4px 0;">
-
-      <table class="bill-info-table bill-info-text">
-        <tr>
-          <td width="60%" style="text-align: left; padding-bottom: 2px;">
-            <strong>Outlet ID:</strong> <span id="bId">---</span>
-          </td>
-          <td width="40%" style="text-align: right; padding-bottom: 2px;">
-            <strong>Contact No:</strong>
-          </td>
-        </tr>
-        <tr>
-          <td width="60%" style="text-align: left; padding-bottom: 2px;">
-            <strong>Outlet:</strong> <span id="bName">---</span>
-          </td>
-          <td width="40%" style="text-align: right; padding-bottom: 2px;">
-            <span id="bPhone">---</span>
-          </td>
-        </tr>
-        <tr>
-          <td width="100%" colspan="2" style="text-align: left; padding-bottom: 2px;">
-            <strong>Address:</strong> <span id="bAddr">---</span>
-          </td>
-        </tr>
-      </table>
-
-      <table class="bill-items-table">
-        <thead>
-          <tr>
-            <th width="40%">Package / Brand</th>
-            <th width="10%" style="text-align: center;">QTY</th>
-            <th width="15%" style="text-align: right;">Rate</th>
-            <th width="15%" style="text-align: right;">Amount</th>
-            <th width="10%" style="text-align: center;">Discount</th>
-            <th width="10%" style="text-align: right;">NTP</th>
-          </tr>
-        </thead>
-        <tbody id="billTbody">
-        </tbody>
-        <tfoot>
-          <tr class="border-top-bottom">
-            <td>Total</td>
-            <td style="text-align: center;" id="totalQty">0</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
-
-      <div class="bill-total-box">
-        <table>
-          <tr>
-            <td width="65%">Gross Amount:</td>
-            <td width="35%" align="right" id="sumGross">0.00</td>
-          </tr>
-          <tr>
-            <td>Discount:</td>
-            <td align="right" style="color: #d00000;" id="sumDisc">0.00</td>
-          </tr>
-          <tr>
-            <td>Advance Income Tax (0%):</td>
-            <td align="right">0.00</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold; font-size: 11px; padding-top: 2px !important; border: none !important;">Net Amount:</td>
-            <td align="right" style="border: none !important;"><div class="net-amount-box" id="sumNet">0.00</div></td>
-          </tr>
-        </table>
+    <div class="container-fluid">
+      <div class="section-card">
+        <div class="section-title">Retailer Details</div>
+        <div class="input-group mb-2">
+          <input type="text" id="inputId" class="form-control" placeholder="Search Outlet ID" oninput="updateID()">
+          <div class="input-group-append"><button class="btn btn-search" onclick="searchData()"><i class="fas fa-search"></i></button></div>
+        </div>
+        <input type="text" id="outName" class="form-control" placeholder="Outlet Name" oninput="liveSync()">
+        <input type="text" id="outPhone" class="form-control" placeholder="Phone Number" oninput="liveSync()">
+        <input type="text" id="outAddr" class="form-control" placeholder="Address" oninput="liveSync()">
+        <input type="text" id="outBooker" class="form-control" placeholder="Booker Name" oninput="liveSync()">
+        <button class="btn btn-loc btn-block" onclick="getLocation()">
+          <i class="fas fa-map-marker-alt mr-2" style="color:red;"></i> <span id="locStatus">GET SHOP LOCATION (PIN)</span>
+        </button>
+        <input type="hidden" id="outLoc" value="Location Not Shared">
       </div>
-      
-      <div style="clear: both;"></div>
-
-      <div class="bill-footer-section">
-        <table width="100%">
-          <tr>
-            <td width="20%"><strong>User:</strong><br>Shujaat Raja</td>
-            <td width="20%"><strong>Booker:</strong><br><span id="bBooker">---</span></td>
-            <td width="20%"><strong>Driver:</strong><br>NAUMAN HAYAT</td>
-            <td width="15%"><strong>Veh#:</strong><br>CAM-1715</td>
-            <td width="25%" align="right"><strong>PJP Route:</strong><br>2129 - Katas Route</td>
-          </tr>
-        </table>
+      <div class="section-card" style="border: 2px solid var(--w); background: #f6fff9;">
+        <div class="section-title" style="color: #075E54;"><i class="fab fa-whatsapp mr-2"></i> SEND ORDER TO:</div>
+        <select id="waTarget" class="form-control font-weight-bold wa-select-box">
+          <option value="923465846781">Asiam Hussain</option>
+          <option value="923415011140">Adnan Hassan</option>
+          <option value="923061645603">Saqib Abbas</option>
+          <option value="923461649698">Arslan Sajid</option>
+          <option value="923150564149">Asim Raza</option>
+          <option value="923105714429">Naqeeb Ur Rehman</option>
+        </select>
       </div>
-
+      <div class="section-card">
+        <div class="section-title">Select Products 🛒</div>
+        <select id="prodDrop" class="form-control" style="background:#fffbe6;"></select>
+        <div class="row no-gutters">
+          <div class="col-7 pr-2"><input type="number" id="prodQty" class="form-control" value="1" min="1"></div>
+          <div class="col-5"><button class="btn btn-primary btn-block h-100" style="border-radius:12px; font-weight:bold;" onclick="addItem()">ADD</button></div>
+        </div>
+      </div>
+      <div id="cartList" class="px-2 mb-3"></div>
+      <div id="captureArea">
+        <div class="bill-box" id="mainBill">
+          <table class="bill-header-table" style="margin-bottom: 0px;">
+            <tr>
+              <td width="50%" style="vertical-align: top;"><span style="font-size: 13px; font-weight: bold; color: #000000; display: block; line-height: 1.1; margin: 0; padding: 0;">ISLAM AND CO.</span></td>
+              <td width="50%" class="invoice-title">SALE INVOICE</td>
+            </tr>
+          </table>
+          <div style="text-align: center; font-size: 10px; font-weight: 500; margin: 0 auto; padding: 0; color: #000; line-height: 1.0;" id="billDate"></div>
+          <table class="bill-info-table" style="margin-top: 4px;">
+            <tr>
+              <td width="60%" class="dist-details"><strong>Distributor CNIC :</strong> 37202-4977404-3<br><strong>Distributor NTN :</strong> A439767-0<br><strong>Distributor STRN :</strong> 9000<br><strong>Distributor Address :</strong> CHOA SAIDAN SHAH, CHAKWAL</td>
+              <td width="40%" style="text-align: right; vertical-align: top; font-size: 10px; line-height: 1.4;"><br><br><strong>Invoice#</strong> <span id="billInvNum">44435754</span></td>
+            </tr>
+          </table>
+          <p class="dispatch-text"><strong>Dispatch#</strong> 1632207    14981778507429067</p>
+          <hr style="border: 0; border-top: 1px solid #000; margin: 4px 0;">
+          <table class="bill-info-table bill-info-text">
+            <tr><td width="60%" style="text-align: left; padding-bottom: 2px;"><strong>Outlet ID:</strong> <span id="bId">---</span></td><td width="40%" style="text-align: right; padding-bottom: 2px;"><strong>Contact No:</strong></td></tr>
+            <tr><td width="60%" style="text-align: left; padding-bottom: 2px;"><strong>Outlet:</strong> <span id="bName">---</span></td><td width="40%" style="text-align: right; padding-bottom: 2px;"><span id="bPhone">---</span></td></tr>
+            <tr><td width="100%" colspan="2" style="text-align: left; padding-bottom: 2px;"><strong>Address:</strong> <span id="bAddr">---</span></td></tr>
+            <table class="bill-info-table bill-info-text" style="width: 100%;">
+  <tr>
+    <td colspan="2" style="text-align: left; padding-bottom: 2px;">
+      <strong>NTN:</strong> 3720-8
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: left; width: 50%;">
+      <strong>STRN:</strong> 9000
+    </td>
+    <td style="text-align: center; width: 50%;">
+  <strong>CNIC:</strong> 37202-848449
+</td>
+    </td>
+  </tr>
+</table>
+          </table>
+          <table class="bill-items-table">
+            <thead><tr><th width="40%">Package / Brand</th><th width="10%" style="text-align: center;">QTY</th><th width="15%" style="text-align: right;">Rate</th><th width="15%" style="text-align: right;">Amount</th><th width="10%" style="text-align: center;">Discount</th><th width="10%" style="text-align: right;">NTP</th></tr></thead>
+            <tbody id="billTbody"></tbody>
+            <tfoot><tr class="border-top-bottom"><td>Total</td><td style="text-align: center;" id="totalQty">0</td><td></td><td></td><td></td><td></td></tr></tfoot>
+          </table>
+          <div class="bill-total-box">
+            <table>
+              <tr><td width="65%">Gross Amount:</td><td width="35%" align="right" id="sumGross">0.00</td></tr>
+              <tr><td>Discount:</td><td align="right" style="color: #d00000;" id="sumDisc">0.00</td></tr>
+              <tr><td>Advance Income Tax (0%):</td><td align="right">0.00</td></tr>
+              <tr><td style="font-weight: bold; font-size: 11px; padding-top: 2px !important; border: none !important;">Net Amount:</td><td align="right" style="border: none !important;"><div class="net-amount-box" id="sumNet">0.00</div></td></tr>
+            </table>
+          </div>
+          <div style="clear: both;"></div>
+          <div class="bill-footer-section">
+            <table width="100%">
+              <tr><td width="20%"><strong>User:</strong><br>Shujaat Raja</td><td width="20%"><strong>Booker:</strong><br><span id="bBooker">---</span></td><td width="20%"><strong>Driver:</strong><br>NAUMAN HAYAT</td><td width="15%"><strong>Veh#:</strong><br>CAM-512</td><td width="25%" align="right"><strong>PJP Route:</strong><br>11 - Choa Route</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="px-2 mb-4">
+        <button class="btn btn-dark btn-block mb-3" onclick="downloadBill()" style="height:50px; border-radius:15px; font-weight:800;"><i class="fas fa-camera mr-2"></i> SAVE RECEIPT</button>
+        <button class="btn-wa" onclick="confirmOrder()"><i class="fab fa-whatsapp mr-2"></i> SEND WHATSAPP ✅</button>
+      </div>
     </div>
-  </div>
-
-  <div class="px-2 mb-4">
-    <button class="btn btn-dark btn-block mb-3" onclick="downloadBill()" style="height:50px; border-radius:15px; font-weight:800;"><i class="fas fa-camera mr-2"></i> SAVE RECEIPT</button>
-    <button class="btn-wa" onclick="confirmOrder()"><i class="fab fa-whatsapp mr-2"></i> SEND WHATSAPP ✅</button>
-  </div>
 </div>
 
 <script>
+  function checkLogin() {
+    let p = document.getElementById('passInput').value;
+    if(p === "51214") { 
+      document.getElementById('loginOverlay').style.display = 'none';
+      document.getElementById('mainSystemApp').style.display = 'block';
+    } else {
+      document.getElementById('errMsg').innerText = "❌ Galat Password!";
+    }
+  }
+
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmMjvZmRxrJH2XsuXE8QwsGYK7uxVakLXG-HVs0-xMRPFMBnJkNrn-lPg9QrNv8fPggA/exec";
   let serverData = {rates:[], master:[], promo:""};
   let basket = [];
-
   window.onload = function() {
     document.getElementById('billDate').innerText = new Date().toLocaleString();
     document.getElementById('billInvNum').innerText = Math.floor(10000000 + Math.random() * 90000000);
-    
-    fetch(SCRIPT_URL + "?getData=true")
-    .then(res => res.json())
-    .then(res => {
+    fetch(SCRIPT_URL + "?getData=true").then(res => res.json()).then(res => {
       serverData = res;
       document.getElementById('promoTxt').innerText = res.promo || "Welcome to Islam and Co.";
       let pD = document.getElementById('prodDrop');
       pD.innerHTML = '<option value="">-- Choose Item --</option>';
-      res.rates.forEach((r, i) => { 
-        if(i > 0 && r[0]) {
-          let option = new Option(r[0] + " (Rate: " + r[2] + ")", r[0]);
-          option.setAttribute('data-rate', r[2]);
-          option.setAttribute('data-disc', r[3] || 0);
-          pD.add(option);
-        }
-      });
+      res.rates.forEach((r, i) => { if(i > 0 && r[0]) { let option = new Option(r[0] + " (Rate: " + r[2] + ")", r[0]); option.setAttribute('data-rate', r[2]); option.setAttribute('data-disc', r[3] || 0); pD.add(option); } });
     });
   };
-
-  function updateID() {
-    document.getElementById('bId').innerText = document.getElementById('inputId').value || "---";
-  }
-
-  function searchData() {
-    let id = document.getElementById('inputId').value.trim();
-    let match = serverData.master.find(r => r[0].toString() === id);
-    if(match) {
-      document.getElementById('outName').value = match[1];
-      document.getElementById('outAddr').value = match[2];
-      document.getElementById('outPhone').value = match[3] || "N/A";
-      document.getElementById('outBooker').value = match[5];
-      liveSync();
-    } else { alert("ID not found!"); }
-  }
-
-  function liveSync() {
-    document.getElementById('bId').innerText = document.getElementById('inputId').value || "---";
-    document.getElementById('bName').innerText = document.getElementById('outName').value || "---";
-    document.getElementById('bPhone').innerText = document.getElementById('outPhone').value || "---";
-    document.getElementById('bAddr').innerText = document.getElementById('outAddr').value || "---";
-    document.querySelectorAll('#bBooker').forEach(el => el.innerText = document.getElementById('outBooker').value || "---");
-  }
-
-  function addItem() {
-    let pDrop = document.getElementById('prodDrop');
-    let pName = pDrop.value;
-    let qty = parseInt(document.getElementById('prodQty').value);
-    if(!pName || qty < 1) return;
-
-    let selectedOption = pDrop.options[pDrop.selectedIndex];
-    let rate = parseFloat(selectedOption.getAttribute('data-rate'));
-    let discPerUnit = parseFloat(selectedOption.getAttribute('data-disc'));
-
-    let existing = basket.find(i => i.name === pName);
-    if(existing) {
-      existing.qty += qty;
-      existing.tDisc = existing.qty * discPerUnit;
-      existing.tPrice = existing.qty * rate;
-    } else {
-      basket.push({name: pName, qty: qty, tDisc: qty * discPerUnit, tPrice: qty * rate});
-    }
-    renderAll();
-  }
-
-  function removeItem(index) {
-    basket.splice(index, 1);
-    renderAll();
-  }
-
-  function renderAll() {
-    let bHtml = "", cHtml = "", gross = 0, totalDisc = 0, totalQty = 0;
-    basket.forEach((item, i) => {
-      let ntp = item.tPrice - item.tDisc;
-      bHtml += `<tr>
-                  <td>${item.name}</td>
-                  <td style="text-align: center;">${item.qty}</td>
-                  <td style="text-align: right;">${item.tPrice / item.qty}</td>
-                  <td style="text-align: right;">${item.tPrice}</td>
-                  <td style="text-align: center;">${item.tDisc}</td>
-                  <td style="text-align: right;">${ntp}</td>
-                </tr>`;
-      cHtml += `<div class="cart-item">
-                  <span><b>${item.name}</b> (x${item.qty})</span>
-                  <button class="btn-remove" onclick="removeItem(${i})"><i class="fas fa-trash-alt"></i></button>
-                </div>`;
-      gross += item.tPrice; 
-      totalDisc += item.tDisc;
-      totalQty += item.qty;
-    });
-    
-    document.getElementById('billTbody').innerHTML = bHtml;
-    document.getElementById('cartList').innerHTML = cHtml;
-    document.getElementById('totalQty').innerText = totalQty;
-    document.getElementById('sumGross').innerText = gross.toLocaleString() + ".00";
-    document.getElementById('sumDisc').innerText = totalDisc.toLocaleString() + ".00";
-    document.getElementById('sumNet').innerText = (gross - totalDisc).toLocaleString() + ".00";
-  }
-
-  function getLocation() {
-    if (navigator.geolocation) {
-      document.getElementById('locStatus').innerText = "Locating GPS...";
-      navigator.geolocation.getCurrentPosition(p => {
-        let lat = p.coords.latitude;
-        let lon = p.coords.longitude;
-        let locUrl = `https://maps.google.com/?q=${lat},${lon}`;
-        document.getElementById('outLoc').value = locUrl;
-        document.getElementById('locStatus').innerText = "LOCATION PIN SECURED ✅";
-        alert("Shop Current Location Captured!");
-      }, (error) => { 
-        alert("Location Error: Please ensure GPS is ON."); 
-      }, {enableHighAccuracy: true, timeout: 10000});
-    }
-  }
-
-  function confirmOrder() {
-    if(basket.length === 0) return alert("Cart empty!");
-    let boy = document.getElementById('waTarget').options[document.getElementById('waTarget').selectedIndex].text;
-    if(confirm("Confirm Sending Order to " + boy + "?")) { processOrder(); }
-  }
-
-  function processOrder() {
-    let targetNum = document.getElementById('waTarget').value;
-    let netAmt = document.getElementById('sumNet').innerText;
-    let bkr = document.getElementById('outBooker').value;
-    
-    let orderData = {
-      outletId: document.getElementById('inputId').value || "Manual",
-      outletName: document.getElementById('outName').value,
-      bookerName: bkr,
-      products: basket.map(i => `${i.name} (x${i.qty})`).join(", "),
-      totalBill: netAmt
-    };
-
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      body: JSON.stringify(orderData)
-    });
-
-    let itemsTxt = basket.map(i => `• *${i.name}*%0AQty: ${i.qty} | Disc: ${i.tDisc} | Total: ${i.tPrice}`).join("%0A%0A");
-    let loc = document.getElementById('outLoc').value;
-    
-    let msg = `*NEW ORDER - ISLAM AND CO*%0A━━━━━━━━━━━━━━━%0A🆔 *Outlet ID:* ${orderData.outletId}%0A🏪 *Shop:* ${orderData.outletName}%0A📞 *Phone:* ${document.getElementById('outPhone').value}%0A👤 *Booker:* ${orderData.bookerName}%0A📍 *Location:* ${loc}%0A━━━━━━━━━━━━━━━%0A*Items:*%0A${itemsTxt}%0A━━━━━━━━━━━━━━━%0A💵 *Gross:* Rs.${document.getElementById('sumGross').innerText}%0A🧧 *Discount:* Rs.${document.getElementById('sumDisc').innerText}%0A🔥 *NET AMOUNT:* Rs.${netAmt}%0A━━━━━━━━━━━━━━━%0A_Powered by Shujaat Raja_`;
-    window.open(`https://wa.me/${targetNum}?text=${msg}`);
-  }
-
-  function downloadBill() {
-    html2canvas(document.getElementById('mainBill'), {scale: 3}).then(canvas => {
-      let link = document.createElement('a'); link.download = 'IslamCo_Official_Invoice.png';
-      link.href = canvas.toDataURL(); link.click();
-    });
-  }
-</script>
-</body>
-</html
+  function updateID() { document.getElementById('bId').innerText = document.getElementById('inputId').value || "---"; }
+  function searchData() { let id = document.getElementById('inputId').value.trim(); let match = serverData.master.find(r => r[0].toString() === id); if(match) { document.getElementById('outName').value = match[1]; document.getElementById('outAddr').value = match[2]; document.getElementById('outPhone').value = match[3] || "N/A"; document.getElementById('outBooker').value = match[5]; liveSync(); } else { alert("ID not found!"); } }
+  function liveSync() { document.getElementById('bId').innerText = document.getElementById('inputId').value || "---"; document.getElementById('bName').innerText = document.getElementById('outName').value || "---"; document.getElementById('bPhone').innerText = document.getElementById('outPhone').value || "---"; document.getElementById('bAddr').innerText = document.getElementById('outAddr').value || "---"; document.querySelectorAll('#bBooker').forEach(el => el.innerText = document.getElementById('outBooker').value || "---"); }
+  function addItem() { let pDrop = document.getElementById('prodDrop'); let pName = pDrop.value; let qty = parseInt(document.getElementById('prodQty').value); if(!pName || qty < 1) return; let selectedOption = pDrop.options[pDrop.selectedIndex]; let rate = parseFloat(selectedOption.getAttribute('data-rate')); let discPerUnit = parseFloat(selectedOption.getAttribute('data-disc')); let existing = basket.find(i => i.name === pName); if(existing) { existing.qty += qty; existing.tDisc = existing.qty * discPerUnit; existing.tPrice = existing.qty * rate; } else { basket.push({name: pName, qty: qty, tDisc: qty * discPerUnit, tPrice: qty * rate}); } renderAll(); }
+  function removeItem(index) { basket.splice(index, 1); renderAll(); }
+  function renderAll() { let bHtml = "", cHtml = "", gross = 0, totalDisc = 0, totalQty = 0; basket.forEach((item, i) => { let ntp = item.tPrice - item.tDisc; bHtml += `<tr><td>${item.name}</td><td style="text-align: center;">${item.qty}</td><td style="text-align: right;">${item.tPrice / item.qty}</td><td style="text-align: right;">${item.tPrice}</td><td style="text-align: center;">${item.tDisc}</td><td style="text-align: right;">${ntp}</td></tr>`; cHtml += `<div class="cart-item"><span><b>${item.name}</b> (x${item.qty})</span><button class="btn-remove" onclick="removeItem(${i})"><i class="fas fa-trash-alt"></i></button></div>`; gross += item.tPrice; totalDisc += item.tDisc; totalQty += item.qty; }); document.getElementById('billTbody').innerHTML = bHtml; document.getElementById('cartList').innerHTML = cHtml; document.getElementById('totalQty').innerText = totalQty; document.getElementById('sumGross').innerText = gross.toLocaleString() + ".00"; document.getElementById('sumDisc').innerText = totalDisc.toLocaleString() + ".00"; document.getElementById('sumNet').innerText = (gross - totalDisc).toLocaleString() + ".00"; }
+  function getLocation() { if (navigator.geolocation) { document.getElementById('locStatus').innerText = "Locating GPS..."; navigator.geolocation.getCurrentPosition(p => { let lat = p.coords.latitude; let lon = p.coords.longitude; let locUrl = `https://maps.google.com/?q=${lat},${lon}`; document.getElementById('outLoc').value = locUrl; document.getElementById('locStatus').innerText = "LOCATION PIN SECURED ✅"; alert("Shop Current Location Captured!"); }, (error) => { alert("Location Error: Please ensure GPS is ON."); }, {enableHighAccuracy: true, timeout: 10000}); } }
+  function confirmOrder() { if(basket.length === 0) return alert("Cart empty!"); let boy = document.getElementById('waTarget').options[document.getElementById('waTarget').selectedIndex].text; if(confirm("Confirm Sending Order to " + boy + "?")) { processOrder(); } }
+  function processOrder() { let targetNum = document.getElementById('waTarget').value; let netAmt = document.getElementById('sumNet').innerText; let bkr = document.getElementById('outBooker').value; let orderData = { outletId: document.getElementById('inputId').value || "Manual", outletName: document.getElementById('outName').value, bookerName: bkr, products: basket.map(i => `${i.name} (x${i.qty})`).join(", "), totalBill: netAmt }; fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(orderData) }); let itemsTxt = basket.map(i => `• *${i.name}*%0AQty: ${i.qty} | Disc: ${i.tDisc} | Total: ${i.tPrice}`).join("%0A%0A"); let loc = document.getElementById('outLoc').value; let msg = `*NEW ORDER - ISLAM AND CO*%0A━━━━━━━━━━━━━━━%0A🆔 *Outlet ID:* ${orderData.outletId}%0A🏪 *Shop:* ${orderData.outletName}%0A📞 *Phone:* ${document.getElementById('outPhone').value}%0A👤 *Booker:* ${orderData.bookerName}%0A📍 *Location:* ${loc}%0A━━━━━━━━━━━━━━━%0A*Items:*%0A${itemsTxt}%0A━━━
