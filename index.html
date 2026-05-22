@@ -56,12 +56,6 @@
 
 <div id="loginOverlay">
   <div class="login-box">
-  <div style="position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #888;">
-    &reg; Powered by Shujaat
-</div>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pepsi_2023.svg/1280px-Pepsi_2023.svg.png" 
-     style="width: 80px; display: block; margin: 0 auto 10px;">
-<div style="font-size: 14px; margin-bottom: 10px;">Online Ordering System</div>
     <h3 style="color:#002366; font-weight:800;">ISLAM AND CO.</h3>
     <input type="password" id="passInput" class="form-control" placeholder="Enter Password">
     <button onclick="checkLogin()" class="btn btn-primary btn-block" style="background:#002366; border-radius:12px; font-weight:bold;">LOGIN 🚀</button>
@@ -133,22 +127,6 @@
             <tr><td width="60%" style="text-align: left; padding-bottom: 2px;"><strong>Outlet ID:</strong> <span id="bId">---</span></td><td width="40%" style="text-align: right; padding-bottom: 2px;"><strong>Contact No:</strong></td></tr>
             <tr><td width="60%" style="text-align: left; padding-bottom: 2px;"><strong>Outlet:</strong> <span id="bName">---</span></td><td width="40%" style="text-align: right; padding-bottom: 2px;"><span id="bPhone">---</span></td></tr>
             <tr><td width="100%" colspan="2" style="text-align: left; padding-bottom: 2px;"><strong>Address:</strong> <span id="bAddr">---</span></td></tr>
-            <table class="bill-info-table bill-info-text" style="width: 100%;">
-  <tr>
-    <td colspan="2" style="text-align: left; padding-bottom: 2px;">
-      <strong>NTN:</strong> 3720-8
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align: left; width: 50%;">
-      <strong>STRN:</strong> 9000
-    </td>
-    <td style="text-align: center; width: 50%;">
-  <strong>CNIC:</strong> 37202-848449
-</td>
-    </td>
-  </tr>
-</table>
           </table>
           <table class="bill-items-table">
             <thead><tr><th width="40%">Package / Brand</th><th width="10%" style="text-align: center;">QTY</th><th width="15%" style="text-align: right;">Rate</th><th width="15%" style="text-align: right;">Amount</th><th width="10%" style="text-align: center;">Discount</th><th width="10%" style="text-align: right;">NTP</th></tr></thead>
@@ -211,4 +189,8 @@
   function renderAll() { let bHtml = "", cHtml = "", gross = 0, totalDisc = 0, totalQty = 0; basket.forEach((item, i) => { let ntp = item.tPrice - item.tDisc; bHtml += `<tr><td>${item.name}</td><td style="text-align: center;">${item.qty}</td><td style="text-align: right;">${item.tPrice / item.qty}</td><td style="text-align: right;">${item.tPrice}</td><td style="text-align: center;">${item.tDisc}</td><td style="text-align: right;">${ntp}</td></tr>`; cHtml += `<div class="cart-item"><span><b>${item.name}</b> (x${item.qty})</span><button class="btn-remove" onclick="removeItem(${i})"><i class="fas fa-trash-alt"></i></button></div>`; gross += item.tPrice; totalDisc += item.tDisc; totalQty += item.qty; }); document.getElementById('billTbody').innerHTML = bHtml; document.getElementById('cartList').innerHTML = cHtml; document.getElementById('totalQty').innerText = totalQty; document.getElementById('sumGross').innerText = gross.toLocaleString() + ".00"; document.getElementById('sumDisc').innerText = totalDisc.toLocaleString() + ".00"; document.getElementById('sumNet').innerText = (gross - totalDisc).toLocaleString() + ".00"; }
   function getLocation() { if (navigator.geolocation) { document.getElementById('locStatus').innerText = "Locating GPS..."; navigator.geolocation.getCurrentPosition(p => { let lat = p.coords.latitude; let lon = p.coords.longitude; let locUrl = `https://maps.google.com/?q=${lat},${lon}`; document.getElementById('outLoc').value = locUrl; document.getElementById('locStatus').innerText = "LOCATION PIN SECURED ✅"; alert("Shop Current Location Captured!"); }, (error) => { alert("Location Error: Please ensure GPS is ON."); }, {enableHighAccuracy: true, timeout: 10000}); } }
   function confirmOrder() { if(basket.length === 0) return alert("Cart empty!"); let boy = document.getElementById('waTarget').options[document.getElementById('waTarget').selectedIndex].text; if(confirm("Confirm Sending Order to " + boy + "?")) { processOrder(); } }
-  function processOrder() { let targetNum = document.getElementById('waTarget').value; let netAmt = document.getElementById('sumNet').innerText; let bkr = document.getElementById('outBooker').value; let orderData = { outletId: document.getElementById('inputId').value || "Manual", outletName: document.getElementById('outName').value, bookerName: bkr, products: basket.map(i => `${i.name} (x${i.qty})`).join(", "), totalBill: netAmt }; fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(orderData) }); let itemsTxt = basket.map(i => `• *${i.name}*%0AQty: ${i.qty} | Disc: ${i.tDisc} | Total: ${i.tPrice}`).join("%0A%0A"); let loc = document.getElementById('outLoc').value; let msg = `*NEW ORDER - ISLAM AND CO*%0A━━━━━━━━━━━━━━━%0A🆔 *Outlet ID:* ${orderData.outletId}%0A🏪 *Shop:* ${orderData.outletName}%0A📞 *Phone:* ${document.getElementById('outPhone').value}%0A👤 *Booker:* ${orderData.bookerName}%0A📍 *Location:* ${loc}%0A━━━━━━━━━━━━━━━%0A*Items:*%0A${itemsTxt}%0A━━━
+  function processOrder() { let targetNum = document.getElementById('waTarget').value; let netAmt = document.getElementById('sumNet').innerText; let bkr = document.getElementById('outBooker').value; let orderData = { outletId: document.getElementById('inputId').value || "Manual", outletName: document.getElementById('outName').value, bookerName: bkr, products: basket.map(i => `${i.name} (x${i.qty})`).join(", "), totalBill: netAmt }; fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(orderData) }); let itemsTxt = basket.map(i => `• *${i.name}*%0AQty: ${i.qty} | Disc: ${i.tDisc} | Total: ${i.tPrice}`).join("%0A%0A"); let loc = document.getElementById('outLoc').value; let msg = `*NEW ORDER - ISLAM AND CO*%0A━━━━━━━━━━━━━━━%0A🆔 *Outlet ID:* ${orderData.outletId}%0A🏪 *Shop:* ${orderData.outletName}%0A📞 *Phone:* ${document.getElementById('outPhone').value}%0A👤 *Booker:* ${orderData.bookerName}%0A📍 *Location:* ${loc}%0A━━━━━━━━━━━━━━━%0A*Items:*%0A${itemsTxt}%0A━━━━━━━━━━━━━━━%0A💵 *Gross:* Rs.${document.getElementById('sumGross').innerText}%0A🧧 *Discount:* Rs.${document.getElementById('sumDisc').innerText}%0A🔥 *NET AMOUNT:* Rs.${netAmt}%0A━━━━━━━━━━━━━━━%0A_Softwere by Shujaat Raja_`; window.open(`https://wa.me/${targetNum}?text=${msg}`); }
+  function downloadBill() { html2canvas(document.getElementById('mainBill'), {scale: 3}).then(canvas => { let link = document.createElement('a'); link.download = 'IslamCo_Official_Invoice.png'; link.href = canvas.toDataURL(); link.click(); }); }
+</script>
+</body>
+</html>
